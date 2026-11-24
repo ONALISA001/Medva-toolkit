@@ -12,7 +12,7 @@ By James Mbari, HIPAA-certified medical virtual assistant.
 | 3 | [Prior Authorization Tracker](03-prior-auth-tracker/) | Built, needs testing in Google Sheets |
 | 4 | [Referral Tracker](04-referral-tracker/) | Built, needs testing in Google Sheets |
 | 5 | [Patient Intake Pipeline](05-patient-intake/) | Built, needs testing in Google Sheets |
-| 6 | Appointment Reminder and No-Show Reducer | Planned |
+| 6 | [Appointment Reminder and No-Show Reducer](06-appointment-reminders/) | Built, needs testing in Google Sheets |
 | 7 | Clinic HIPAA Security Checklist | Planned |
 
 ## Ground rules for every tool
