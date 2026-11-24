@@ -22,6 +22,11 @@ const shouldFlag = {
   'birth date': 'Verified 04/12/1987 with payer',
   'phone': 'Left message at (555) 201-3344',
   'phone dashed': 'Call back 555-201-3344',
+  'phone missing a digit (found in testing)': 'Called 555-410-023',
+  'phone with spaces': 'Called 555 410 0234',
+  'phone with dots': 'Called 555.410.0234',
+  'international phone': 'Called +254 712 345 678',
+  'local 7-digit phone': 'Call back 410-0234',
   'member id keyword': 'Member ID checked',
   'long id number': 'Ref W123456789 pending',
   'MRN': 'MRN pulled for auth',
@@ -51,6 +56,9 @@ const shouldPass = [
   'Missed 2 calls from the queue',
   'Called Dr office to confirm the fax',
   'PT notes faxed to the payer',
+  'Logged 3 calls, 45 minutes',
+  'Auth valid 2026-11-24 to 2026-12-24',
+  'Chased 12 of 140 open claims',
 ];
 for (const text of shouldPass) {
   test('phiCheck passes "' + text + '"', () => assert.deepStrictEqual(Array.from(ctx.phiCheck(text)), []));

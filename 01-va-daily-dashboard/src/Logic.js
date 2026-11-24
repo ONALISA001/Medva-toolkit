@@ -28,7 +28,13 @@ function phiCheck(text) {
       /\b(0?[1-9]|1[0-2])[\/\-.](0?[1-9]|[12]\d|3[01])[\/\-.](19\d{2}|200\d|201\d)\b/.test(s)) {
     hits.push('a date of birth');
   }
-  if (/(\(\d{3}\)\s?|\b\d{3}[\s.-])\d{3}[\s.-]\d{4}\b/.test(s)) hits.push('a phone number');
+  // Phone numbers as people really type them: full US numbers, numbers missing a digit ("555-410-023"),
+  // international ("+254 712 345 678") and local 7-digit numbers ("410-0234").
+  // Dates use "/" and are handled above, so "12/05/2026" is not caught here.
+  if (/(\+\d{1,3}[\s.-]?)?(\(\d{3}\)\s?|\b\d{3}[\s.-])\d{3}[\s.-]\d{3,4}\b/.test(s) ||
+      /\b\d{3}[\s.-]\d{4}\b/.test(s)) {
+    hits.push('a phone number');
+  }
   if (/\b(MRN|member\s*id|subscriber\s*id|policy\s*(no|number|#))\b/i.test(s) ||
       /\b[A-Z]{0,3}\d{8,}\b/.test(s)) {
     hits.push('a member ID or MRN');
