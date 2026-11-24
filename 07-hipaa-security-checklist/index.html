@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clinic HIPAA Security Checklist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: questions on the left, a sticky score panel on the right; stacks on phones. */
+:root{
+  --bg:#f3f5f6; --surface:#fff; --sunk:#e8ecee; --line:#cfd6da; --fg:#18242b; --muted:#5a6a73;
+  --accent:#1f5f6b; --accent-ink:#fff; --accent-soft:#d9eaec;
+  --good:#2d7a46; --good-soft:#dcefe2; --warn:#9a6200; --warn-soft:#f8ecd2; --bad:#b03a2e; --bad-soft:#f7dfdc;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11181c; --surface:#18232a; --sunk:#0d1316; --line:#2c3a42; --fg:#e3eaed; --muted:#93a4ad;
+  --accent:#6fb8c4; --accent-ink:#0d1a1e; --accent-soft:#1c3940;
+  --good:#78c793; --good-soft:#183223; --warn:#e2b04f; --warn-soft:#3a2c10; --bad:#ec8a7f; --bad-soft:#3d1c18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11181c; --surface:#18232a; --sunk:#0d1316; --line:#2c3a42; --fg:#e3eaed; --muted:#93a4ad;
+  --accent:#6fb8c4; --accent-ink:#0d1a1e; --accent-soft:#1c3940;
+  --good:#78c793; --good-soft:#183223; --warn:#e2b04f; --warn-soft:#3a2c10; --bad:#ec8a7f; --bad-soft:#3d1c18; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
+.wrap{max-width:1120px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;margin-bottom:20px}
+.eyebrow{font:600 .74rem var(--body);text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin:0 0 6px}
+h1{font:700 clamp(1.8rem,4.5vw,2.5rem)/1.05 var(--display);margin:0 0 8px;text-wrap:balance}
+.lede{color:var(--muted);margin:0;max-width:62ch}
+.clinic{display:flex;flex-direction:column;gap:4px;font-size:.8rem;font-weight:500;color:var(--muted);min-width:240px}
+input[type=text]{font:inherit;font-size:.95rem;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.layout{display:grid;gap:24px;grid-template-columns:minmax(0,1fr) 340px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}}
+.area{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.area h2{font:600 1.15rem var(--display);margin:0;padding:12px 16px;background:var(--sunk);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.area h2 .mini{font:500 .78rem var(--mono);color:var(--muted)}
+.q{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0}
+.q p{margin:0}
+.w{display:inline-block;margin-left:6px;font:600 .66rem var(--body);text-transform:uppercase;letter-spacing:.06em;color:var(--bad);vertical-align:1px}
+@media (max-width:560px){.q{grid-template-columns:minmax(0,1fr)}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{font:600 .82rem var(--body);padding:6px 12px;cursor:pointer;color:var(--muted);border-left:1px solid var(--line);white-space:nowrap}
+.seg label:first-of-type{border-left:0}
+.seg input:focus-visible+label{outline:2px solid var(--accent);outline-offset:-2px}
+.seg input[value=yes]:checked+label{background:var(--good-soft);color:var(--good)}
+.seg input[value=no]:checked+label{background:var(--bad-soft);color:var(--bad)}
+.seg input[value=unsure]:checked+label{background:var(--warn-soft);color:var(--warn)}
+aside{position:sticky;top:max(16px,env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.panel h3{font:600 .74rem var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 10px}
+.big{display:flex;align-items:baseline;gap:10px}
+.big b{font:700 3rem/1 var(--display);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:600}
+.Strong{background:var(--good-soft);color:var(--good)} .Needs{background:var(--warn-soft);color:var(--warn)}
+.At{background:var(--bad-soft);color:var(--bad)} .Not{background:var(--sunk);color:var(--muted)}
+.progress{height:6px;background:var(--sunk);border-radius:99px;margin-top:12px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--accent);transition:width .2s}
+.note{font-size:.8rem;color:var(--muted);margin:8px 0 0}
+.bars{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.bars li{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:4px 8px;font-size:.84rem}
+.bars .track{grid-column:1/-1;height:6px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.bars .fill{height:100%;border-radius:99px}
+.bars .n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.fixes{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:.88rem}
+.fixes .a{display:block;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+button{font:600 .86rem var(--body);border-radius:6px;padding:8px 14px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.84rem}
+.mobilebar{display:none}
+@media (max-width:860px){
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+  .mobilebar{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;justify-content:space-between;align-items:center;gap:12px;
+    background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:14px;font-size:.88rem}
+  .mobilebar b{font:700 1.3rem var(--display);font-variant-numeric:tabular-nums}
+  .mobilebar a{color:var(--accent);font-weight:600}
+  aside{position:static}
+}
+footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;display:flex;flex-direction:column;gap:6px}
+footer b{color:var(--fg)}
+.toast{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:6px;font-size:.85rem;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.progress span,.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <p class="eyebrow">Free self-check · 31 questions · about 15 minutes</p>
+      <h1>Clinic HIPAA Security Checklist</h1>
+      <p class="lede">Answer yes, no or not sure. You get a score for each area and the five fixes that matter most. Your answers stay in this browser and are never sent anywhere.</p>
+    </div>
+    <label class="clinic" for="clinicName">Practice name (optional, for the report)
+      <input type="text" id="clinicName" placeholder="Riverside Family Medicine" autocomplete="organization">
+    </label>
+  </header>
+
+  <div class="mobilebar" aria-hidden="true">
+    <span><b id="mOverall">–</b> <span id="mBand" class="pill Not">Not started</span></span>
+    <span><span id="mCount">0/31</span> · <a href="#results">See results</a></span>
+  </div>
+
+  <div class="layout">
+    <main id="questions" aria-label="Checklist questions"></main>
+
+    <aside aria-label="Your results" id="results">
+      <div class="panel" aria-live="polite">
+        <h3>Overall</h3>
+        <div class="big"><b id="overallPct">–</b><span id="overallBand" class="pill Not">Not started</span></div>
+        <div class="progress" aria-hidden="true"><span id="progressBar" style="width:0%"></span></div>
+        <p class="note" id="progressNote">0 of 31 answered</p>
+      </div>
+      <div class="panel">
+        <h3>By area</h3>
+        <ul class="bars" id="areaBars"></ul>
+      </div>
+      <div class="panel">
+        <h3>Top fixes</h3>
+        <div id="fixesBox"><p class="note" style="margin:0">Answer a few questions to see what to fix first.</p></div>
+      </div>
+      <div class="panel">
+        <div class="row">
+          <button type="button" id="copyBtn">Copy report</button>
+          <button type="button" class="ghost" id="exampleBtn">Try an example clinic</button>
+          <button type="button" class="ghost" id="clearBtn">Clear answers</button>
+        </div>
+        <div class="confirm" id="clearConfirm" hidden>
+          <span>Clear every answer?</span>
+          <button type="button" id="clearYes">Yes, clear</button>
+          <button type="button" class="ghost" id="clearNo">Keep them</button>
+        </div>
+        <textarea id="fallback" aria-label="Report text" hidden style="width:100%;height:160px;margin-top:10px;font:12px var(--mono)"></textarea>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <span>This checklist is a starting point. It is not legal advice and not the formal security risk analysis the HIPAA Security Rule requires. It asks about your setup only and never about patients.</span>
+    <span>Want help closing these gaps? <b>James Mbari</b>, HIPAA-certified medical virtual assistant · <span id="contact">jamesmbari3@gmail.com</span></span>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="checklist.js"></script>
+<script>
+(function () {
+  var C = window.Checklist;
+  var KEY = 'hipaa-checklist-v1';
+  var state = load();
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || { answers: {}, clinic: '' }; }
+    catch (e) { return { answers: {}, clinic: '' }; }
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function bandClass(b) { return b.split(' ')[0]; }
+  function color(b) { return b === 'Strong' ? 'var(--good)' : b === 'Needs work' ? 'var(--warn)' : b === 'At risk' ? 'var(--bad)' : 'var(--line)'; }
+  function toast(t) { var e = document.getElementById('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(e._t); e._t = setTimeout(function () { e.classList.remove('on'); }, 1800); }
+
+  // Questions
+  var html = '';
+  C.AREAS.forEach(function (a) {
+    html += '<section class="area" aria-labelledby="h-' + a.id + '"><h2 id="h-' + a.id + '">' + esc(a.name) + '<span class="mini" id="mini-' + a.id + '"></span></h2>';
+    C.questionsIn(a.id).forEach(function (q) {
+      html += '<div class="q" role="radiogroup" aria-labelledby="t-' + q.id + '"><p id="t-' + q.id + '">' + esc(q.q) +
+        (q.weight === 3 ? '<span class="w">critical</span>' : '') + '</p><div class="seg">' +
+        [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure']].map(function (o) {
+          var id = q.id + '-' + o[0];
+          return '<input type="radio" name="' + q.id + '" id="' + id + '" value="' + o[0] + '"' + (state.answers[q.id] === o[0] ? ' checked' : '') + '>' +
+            '<label for="' + id + '">' + o[1] + '</label>';
+        }).join('') + '</div></div>';
+    });
+    html += '</section>';
+  });
+  document.getElementById('questions').innerHTML = html;
+
+  document.getElementById('questions').addEventListener('change', function (e) {
+    if (e.target.type !== 'radio') return;
+    state.answers[e.target.name] = e.target.value;
+    save(); render();
+  });
+  var clinic = document.getElementById('clinicName');
+  clinic.value = state.clinic || '';
+  clinic.addEventListener('input', function () { state.clinic = clinic.value; save(); });
+
+  function render() {
+    var r = C.score(state.answers);
+    var o = r.overall;
+    document.getElementById('overallPct').textContent = o.pct === null ? '–' : o.pct + '%';
+    var bandEl = document.getElementById('overallBand');
+    bandEl.textContent = o.band; bandEl.className = 'pill ' + bandClass(o.band);
+    document.getElementById('mOverall').textContent = o.pct === null ? '–' : o.pct + '%';
+    var mBand = document.getElementById('mBand');
+    mBand.textContent = o.band; mBand.className = 'pill ' + bandClass(o.band);
+    document.getElementById('mCount').textContent = o.answered + '/' + C.QUESTIONS.length;
+    document.getElementById('progressBar').style.width = Math.round(o.answered / C.QUESTIONS.length * 100) + '%';
+    document.getElementById('progressNote').textContent = o.answered + ' of ' + C.QUESTIONS.length + ' answered' +
+      (o.answered && o.unanswered ? '. Unanswered questions count as gaps.' : '');
+
+    document.getElementById('areaBars').innerHTML = r.areas.map(function (a) {
+      var shown = a.band === 'Not started' ? 0 : a.pct;
+      return '<li><span>' + esc(a.name) + '</span><span class="n">' + (a.band === 'Not started' ? '–' : a.pct + '%') + '</span>' +
+        '<span class="track"><span class="fill" style="display:block;width:' + shown + '%;background:' + color(a.band) + '"></span></span></li>';
+    }).join('');
+    r.areas.forEach(function (a) {
+      document.getElementById('mini-' + a.id).textContent = a.band === 'Not started' ? '' : a.pct + '% · ' + a.band;
+    });
+
+    var box = document.getElementById('fixesBox');
+    if (r.fixes.length) {
+      box.innerHTML = '<ol class="fixes">' + r.fixes.map(function (f) {
+        return '<li><span class="a">' + esc(f.area) + (f.weight === 3 ? ' · critical' : '') + '</span>' + esc(f.text) + '</li>';
+      }).join('') + '</ol>' + (r.allGaps.length > 5 ? '<p class="note">' + (r.allGaps.length - 5) + ' more gap(s) are in the copied report.</p>' : '');
+    } else {
+      box.innerHTML = '<p class="note" style="margin:0">' + (r.complete ? 'No gaps found. Review these every year.' : 'Answer a few questions to see what to fix first.') + '</p>';
+    }
+    return r;
+  }
+
+  function fullReport() {
+    var r = C.score(state.answers);
+    var text = C.reportText(r, state.clinic, new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
+    if (r.allGaps.length > 5) {
+      text = text.replace('\n\nThis checklist', '\n\nOther gaps:\n' + r.allGaps.slice(5).map(function (f) { return '- ' + f.text; }).join('\n') + '\n\nThis checklist');
+    }
+    return text;
+  }
+
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    var text = fullReport();
+    var fb = document.getElementById('fallback');
+    var show = function () { fb.hidden = false; fb.value = text; fb.focus(); fb.select(); toast('Report selected. Press Ctrl+C to copy.'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { fb.hidden = true; toast('Report copied'); }, show);
+    } else show();
+  });
+
+  document.getElementById('exampleBtn').addEventListener('click', function () {
+    var no = ['pw2', 'dev1', 'acc3', 'mail2', 'bak3', 'baa2', 'train4', 'phish2', 'net2'];
+    var unsure = ['baa3', 'pw4', 'acc4'];
+    state.answers = {};
+    C.QUESTIONS.forEach(function (q) {
+      state.answers[q.id] = no.indexOf(q.id) !== -1 ? 'no' : unsure.indexOf(q.id) !== -1 ? 'unsure' : 'yes';
+    });
+    state.clinic = 'Example Family Clinic';
+    clinic.value = state.clinic;
+    save(); syncRadios(); render();
+    toast('Loaded an example clinic');
+  });
+
+  var confirmBox = document.getElementById('clearConfirm');
+  document.getElementById('clearBtn').addEventListener('click', function () { confirmBox.hidden = false; });
+  document.getElementById('clearNo').addEventListener('click', function () { confirmBox.hidden = true; });
+  document.getElementById('clearYes').addEventListener('click', function () {
+    state = { answers: {}, clinic: '' }; clinic.value = '';
+    save(); syncRadios(); render(); confirmBox.hidden = true;
+    document.getElementById('fallback').hidden = true;
+    toast('Answers cleared');
+  });
+
+  function syncRadios() {
+    document.querySelectorAll('#questions input[type=radio]').forEach(function (i) { i.checked = state.answers[i.name] === i.value; });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
