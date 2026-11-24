@@ -9,7 +9,7 @@ By James Mbari, HIPAA-certified medical virtual assistant.
 |---|---|---|
 | 1 | [VA Daily Dashboard and EOD Report](01-va-daily-dashboard/) | Built, needs testing in Google Sheets |
 | 2 | [Insurance Verification Toolkit](02-insurance-verification/) | Built, needs testing in Google Sheets |
-| 3 | Prior Authorization Tracker | Planned |
+| 3 | [Prior Authorization Tracker](03-prior-auth-tracker/) | Built, needs testing in Google Sheets |
 | 4 | Referral Tracker | Planned |
 | 5 | Patient Intake Pipeline | Planned |
 | 6 | Appointment Reminder and No-Show Reducer | Planned |
