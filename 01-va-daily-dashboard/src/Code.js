@@ -130,8 +130,11 @@ function prepareReport_() {
   var problems = validateRows(todays);
   if (problems.length) {
     shadeProblems_(problems);
+    // Patient-data problems matter most, so report them first.
+    problems.sort(function (a, b) { return (b.column === 'Notes') - (a.column === 'Notes'); });
     var first = problems[0];
-    return { ok: false, reason: 'Held: fix row ' + first.rowNumber + ' (' + first.column + '). ' + first.message +
+    var message = /[.!?]$/.test(first.message) ? first.message : first.message + '.';
+    return { ok: false, reason: 'Held: fix row ' + first.rowNumber + ' (' + first.column + '). ' + message +
       (problems.length > 1 ? ' ' + (problems.length - 1) + ' more cell(s) are shaded red.' : '') };
   }
   var summary = summarizeDay(todays, today);
