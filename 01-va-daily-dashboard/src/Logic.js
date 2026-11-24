@@ -34,7 +34,12 @@ function phiCheck(text) {
     hits.push('a member ID or MRN');
   }
   if (/[^\s@]+@[^\s@]+\.[a-z]{2,}/i.test(s)) hits.push('an email address');
-  if (/\b(Mr|Mrs|Ms|Miss|Dr|pt|patient)\.?\s+[A-Z][a-z]+/.test(s)) hits.push("a person's name");
+  // A title followed by a name, with or without a dot or space, in any case: "Mrs Johnson", "Mrs.johnson", "MR SMITH".
+  // "Miss" needs a word break after it so "Missed" doesn't count.
+  var titledName = /\b(Mr|Mrs|Ms|Miss|Mx|MR|MRS|MISS)\b\.?\s*[A-Za-z][A-Za-z'\-]+/.test(s);
+  // "Dr" and "patient"/"pt" need a capitalised name, so "Dr office" and "PT notes" (physical therapy) don't count.
+  var otherName = /\bDr\b\.?\s*[A-Z][a-z]+/.test(s) || /\b([Pp]atient|PATIENT|[Pp]t|PT)\b\.?\s*[A-Z][a-z]+/.test(s);
+  if (titledName || otherName) hits.push("a person's name");
   return hits;
 }
 

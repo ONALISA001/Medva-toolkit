@@ -28,6 +28,12 @@ const shouldFlag = {
   'email': 'Sent to jane.test@example.com',
   'titled name': 'Called Mrs Johnson about her auth',
   'patient name': 'patient Smith rescheduled',
+  'title with a dot and no space (found in testing)': 'Called Mrs.johnson about her auth',
+  'lowercase surname after a title': 'Called Mrs johnson',
+  'all capitals': 'Spoke to MR SMITH today',
+  'Ms with a dot': 'Ms. lee called back',
+  'Dr with a name': 'Faxed to Dr.Patel',
+  'pt with a name': 'pt Jones needs a callback',
 };
 for (const [label, text] of Object.entries(shouldFlag)) {
   test('phiCheck flags ' + label, () => assert.ok(ctx.phiCheck(text).length > 0, text));
@@ -42,6 +48,9 @@ const shouldPass = [
   'Cleared shared inbox to zero',
   'Called Blue Cross about 2 claims',
   'Sent cardiology packet; confirmed receipt',
+  'Missed 2 calls from the queue',
+  'Called Dr office to confirm the fax',
+  'PT notes faxed to the payer',
 ];
 for (const text of shouldPass) {
   test('phiCheck passes "' + text + '"', () => assert.deepStrictEqual(Array.from(ctx.phiCheck(text)), []));
