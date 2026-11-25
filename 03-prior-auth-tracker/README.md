@@ -42,6 +42,14 @@ Flags refresh whenever someone edits either tab, and again before each digest.
 ## Demo
 Run **Prior Auth Tools > Fill sample data (demo)**. It adds 12 made-up requests (accounts `TEST-3001` to `TEST-3012`) and 4 log entries that show every kind of flag. Then run **Send digest now** with your own email in Settings.
 
+## About the Google warning
+The first time you run it, Google says **"Google hasn't verified this app"**. That's normal for any private Apps Script that hasn't been through Google's app review. It doesn't mean anything is wrong.
+- To continue: click **Advanced**, then **Go to (project name) (unsafe)**. Read the permission list, then click **Allow**.
+- The permissions should match [DATA-AND-ACCESS.md](DATA-AND-ACCESS.md). If it asks for anything more, such as *all* your Google Drive files, don't allow it.
+- In a clinic's Google Workspace, the warning usually doesn't appear for staff in the same domain, and the Workspace admin can mark the tool as trusted.
+
+Full explanation, admin steps and what to tell a clinic: [GOOGLE-WARNING.md](../GOOGLE-WARNING.md).
+
 ## Tests
 ```powershell
 node test/logic.test.js

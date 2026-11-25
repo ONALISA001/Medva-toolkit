@@ -15,6 +15,9 @@ By James Mbari, HIPAA-certified medical virtual assistant.
 | 6 | [Appointment Reminder and No-Show Reducer](06-appointment-reminders/) | Built, needs testing in Google Sheets |
 | 7 | [Clinic HIPAA Security Checklist](07-hipaa-security-checklist/) | Built and checked in a browser |
 
+## About the Google warning
+The Sheets tools show "Google hasn't verified this app" the first time they run. That's normal for private scripts. See [GOOGLE-WARNING.md](GOOGLE-WARNING.md) for what it means, why it's safe to continue, and how a clinic's admin can approve the tools.
+
 ## Ground rules for every tool
 1. No real patient data in demos or templates. Made-up data only.
 2. Client data stays in the client's own systems, under the clinic's BAA with Google.

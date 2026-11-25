@@ -43,6 +43,14 @@ Or with clasp: copy `.clasp.json.example` to `.clasp.json`, add the Script ID, t
 2. Run **Fill sample appointments (demo)**. It adds 8 weeks of made-up history, where the no-show rate falls as confirmations rise, plus upcoming appointments covering every case.
 3. Run **Preview tomorrow's reminders**, then **Run reminders now** and **Send weekly report now**. Every email lands in your inbox marked `[TEST]`.
 
+## About the Google warning
+The first time you run it, Google says **"Google hasn't verified this app"**. That's normal for any private Apps Script that hasn't been through Google's app review. It doesn't mean anything is wrong.
+- To continue: click **Advanced**, then **Go to (project name) (unsafe)**. Read the permission list, then click **Allow**.
+- The permissions should match [DATA-AND-ACCESS.md](DATA-AND-ACCESS.md). If it asks for anything more, such as *all* your Google Drive files, don't allow it.
+- In a clinic's Google Workspace, the warning usually doesn't appear for staff in the same domain, and the Workspace admin can mark the tool as trusted.
+
+Full explanation, admin steps and what to tell a clinic: [GOOGLE-WARNING.md](../GOOGLE-WARNING.md).
+
 ## Tests
 ```powershell
 node test/logic.test.js
