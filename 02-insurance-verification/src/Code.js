@@ -89,6 +89,7 @@ function onVerificationSubmit(e) {
   if (sheet.getName() !== SHEET_RESULTS) return;
   var headers = ensureStatusColumns_(sheet);
   writeStatus_(sheet, headers, e && e.range ? e.range.getRow() : sheet.getLastRow());
+  applyStatusColors_(sheet, headers);
 }
 
 function refreshAllStatuses() {
@@ -101,7 +102,10 @@ function refreshAllStatuses() {
 
 function applyStatusColors_(sheet, headers) {
   var col = headers.indexOf(STATUS_COLUMNS[0]) + 1;
-  var range = sheet.getRange(2, col, Math.max(sheet.getMaxRows() - 1, 1), 1);
+  // Start at row 1: Google Forms inserts each new response as a row, and a response inserted at row 2
+  // would push a rule that starts at row 2 down to row 3, leaving the new row uncoloured.
+  // The header text never matches a status, so row 1 itself is never coloured.
+  var range = sheet.getRange(1, col, sheet.getMaxRows(), 1);
   var keep = sheet.getConditionalFormatRules().filter(function (rule) {
     return !rule.getRanges().some(function (r) { return r.getColumn() === col; });
   });
